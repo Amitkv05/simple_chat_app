@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "716472123574",
+    "project_id": "simple-chat-app-8af5a",
+    "storage_bucket": "simple-chat-app-8af5a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:716472123574:android:fc0c4b939a36fab24d2617",
+        "android_client_info": {
+          "package_name": "com.example.simple_chat_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuDnS_HoAVVYkaGMBPRk_D3J2X80Ngp78"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
