@@ -6,25 +6,13 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-class UserImagePicker extends StatefulWidget {
-  const UserImagePicker({super.key, required this.onPickImage});
-
-  final void Function(File pickedImage) onPickImage;
-
-  @override
-  State<UserImagePicker> createState() => _UserImagePickerState();
-}
-
-class _UserImagePickerState extends State<UserImagePicker> {
+Widget imagePicker(context) {
   File? pickedImage;
   void _getFromCamera() async {
     try {
       final selectedImage =
           await ImagePicker().pickImage(source: ImageSource.camera);
-      setState(() {
-        pickedImage = File(selectedImage!.path);
-      });
-      widget.onPickImage(pickedImage!);
+      pickedImage = File(selectedImage!.path);
       VxToast.show(context, msg: 'Image is selected Successfully');
     } on PlatformException catch (e) {
       VxToast.show(context, msg: e.toString());
@@ -35,17 +23,14 @@ class _UserImagePickerState extends State<UserImagePicker> {
     try {
       final selectedImage =
           await ImagePicker().pickImage(source: ImageSource.gallery);
-      setState(() {
-        pickedImage = File(selectedImage!.path);
-      });
-      widget.onPickImage(pickedImage!);
+      pickedImage = File(selectedImage!.path);
       VxToast.show(context, msg: 'Image is selected Successfully');
     } on PlatformException catch (e) {
       VxToast.show(context, msg: e.toString());
     }
   }
 
-  void _pickImage() {
+  void pickImage() {
     showDialog(
         context: context,
         builder: (context) {
@@ -133,23 +118,16 @@ class _UserImagePickerState extends State<UserImagePicker> {
         });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        CircleAvatar(
-          radius: 42,
-          backgroundColor: Colors.grey,
-          foregroundImage: pickedImage != null ? FileImage(pickedImage!) : null,
-        ),
-        TextButton.icon(
-            onPressed: _pickImage,
-            icon: const Icon(Icons.image_rounded),
-            label: const Text(
-              'Add Image',
-              // style: Theme.of(context).textTheme.titleSmall,
-            )),
-      ],
-    );
-  }
+  return Column(
+    children: [
+      const CircleAvatar(
+        radius: 32,
+      ),
+      TextButton.icon(
+        onPressed: pickImage,
+        label: const Text('Add Image'),
+        icon: const Icon(Icons.photo),
+      )
+    ],
+  );
 }

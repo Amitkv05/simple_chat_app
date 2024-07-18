@@ -20,6 +20,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
           elevatedButtonTheme: ElevatedButtonThemeData(
             style: ButtonStyle(
@@ -39,7 +40,7 @@ class MainApp extends StatelessWidget {
             ),
             iconTheme: IconThemeData(color: Colors.white),
             centerTitle: true,
-            color: Colors.black,
+            // color: Colors.black,
           )),
       // home: const Authentication(),
       home: StreamBuilder(
