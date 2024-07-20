@@ -36,7 +36,7 @@ class _AuthenticationState extends State<Authentication> {
     }
     try {
       setState(() {
-        _isAuthentication = true; 
+        _isAuthentication = true;
       });
       _form.currentState!.save();
       if (_isSignup) {
@@ -61,6 +61,7 @@ class _AuthenticationState extends State<Authentication> {
           'email': _enteredEmail,
           'username': _enteredUsername,
           'userImage': imageUrl,
+          'about': '',
         });
       }
     } on PlatformException catch (error) {

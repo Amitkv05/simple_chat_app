@@ -12,7 +12,7 @@ Widget Appbar(GlobalKey<ScaffoldState> key) {
       children: [
         Container(
             height: 70,
-            width: 65,
+            width: 75,
             decoration: const BoxDecoration(
               color: Colors.grey,
               borderRadius: BorderRadius.only(
@@ -24,7 +24,7 @@ Widget Appbar(GlobalKey<ScaffoldState> key) {
               onPressed: () {
                 key.currentState!.openDrawer();
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.settings,
                 color: Colors.white,
               ),
@@ -46,18 +46,26 @@ Widget Appbar(GlobalKey<ScaffoldState> key) {
             builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasData) {
                 var data = snapshot.data!.docs[0];
-                return ClipOval(
-                  child: CircleAvatar(
-                    child: Image.network(
-                      data['userImage'],
-                      height: 150,
-                      width: 150,
-                      fit: BoxFit.cover,
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ClipOval(
+                    child: CircleAvatar(
+                      child: snapshot != null
+                          ? Image.network(
+                              data['userImage'],
+                              height: 150,
+                              width: 150,
+                              fit: BoxFit.cover,
+                            )
+                          : null,
                     ),
                   ),
                 );
               } else {
-                return CircleAvatar();
+                return const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: CircleAvatar(),
+                );
               }
             })
       ],
