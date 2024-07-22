@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_chat_app/const/firebase_data.dart';
-import 'package:simple_chat_app/store_service/store_service.dart';
+import 'package:simple_chat_app/Services/store_service.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 Widget Appbar(GlobalKey<ScaffoldState> key) {
   return Container(
@@ -44,30 +45,50 @@ Widget Appbar(GlobalKey<ScaffoldState> key) {
         FutureBuilder(
             future: StoreService.getUser(user!.uid),
             builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              if (snapshot.hasData) {
-                var data = snapshot.data!.docs[0];
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ClipOval(
-                    child: CircleAvatar(
-                      child: snapshot != null
-                          ? Image.network(
-                              data['userImage'],
-                              height: 150,
-                              width: 150,
-                              fit: BoxFit.cover,
-                            )
-                          : null,
+              if (!snapshot.hasData) {
+                // var index = 0;
+                return const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: CircleAvatar(
+                    backgroundColor: Colors.grey,
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: CircularProgressIndicator(
+                        color: Colors.black,
+                      ),
                     ),
                   ),
                 );
               } else {
-                return const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: CircleAvatar(),
+                return Stack(
+                  children:
+                      snapshot.data!.docs.mapIndexed((currentValue, index) {
+                    var appData = snapshot.data!.docs[index];
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ClipOval(
+                        child: CircleAvatar(
+                          backgroundColor: Colors.grey,
+                          child: snapshot != null
+                              ? Image.network(
+                                  appData['userImage'],
+                                  height: 150,
+                                  width: 150,
+                                  fit: BoxFit.cover,
+                                )
+                              : const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: CircularProgressIndicator(
+                                    color: Colors.black,
+                                  ),
+                                ),
+                        ),
+                      ),
+                    );
+                  }).toList(),
                 );
               }
-            })
+            }),
       ],
     ),
   );

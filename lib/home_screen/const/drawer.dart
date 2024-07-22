@@ -6,7 +6,8 @@ import 'package:simple_chat_app/const/firebase_data.dart';
 import 'package:simple_chat_app/const/icons_data.dart';
 import 'package:simple_chat_app/const/string_data.dart';
 import 'package:simple_chat_app/home_screen/const/profile_screen.dart';
-import 'package:simple_chat_app/store_service/store_service.dart';
+import 'package:simple_chat_app/Services/store_service.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 Widget drawer() {
   return Container(
@@ -32,21 +33,49 @@ Widget drawer() {
         FutureBuilder(
             future: StoreService.getUser(user!.uid),
             builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              if (snapshot.hasData) {
-                var data = snapshot.data!.docs[0];
-                return CircleAvatar(
-                  radius: 56,
-                  child: ClipOval(
-                      child: Image.network(
-                    data['userImage'],
-                    height: 150,
-                    width: 150,
-                    fit: BoxFit.cover,
-                  )),
+              if (!snapshot.hasData) {
+                // var index = 0;
+                return const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: CircleAvatar(
+                    radius: 46,
+                    backgroundColor: Colors.grey,
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: CircularProgressIndicator(
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
                 );
               } else {
-                return const CircleAvatar(
-                  radius: 56,
+                return Stack(
+                  children:
+                      snapshot.data!.docs.mapIndexed((currentValue, index) {
+                    var appData = snapshot.data!.docs[index];
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ClipOval(
+                        child: CircleAvatar(
+                          radius: 46,
+                          backgroundColor: Colors.grey,
+                          child: snapshot != null
+                              ? Image.network(
+                                  appData['userImage'],
+                                  height: 150,
+                                  width: 150,
+                                  fit: BoxFit.cover,
+                                )
+                              : const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: CircularProgressIndicator(
+                                    color: Colors.black,
+                                  ),
+                                ),
+                        ),
+                      ),
+                    );
+                  }).toList(),
                 );
               }
             }),
@@ -70,7 +99,7 @@ Widget drawer() {
               onTap: () {
                 switch (index) {
                   case 0:
-                    Get.to(() => ProfileScreen());
+                    Get.to(() => const ProfileScreen());
                     break;
                   default:
                 }

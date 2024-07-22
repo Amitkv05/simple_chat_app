@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:simple_chat_app/chat_screen/chats_screens.dart';
+import 'package:simple_chat_app/chat_screen/compose_screen.dart';
 import 'package:simple_chat_app/home_screen/const/appbar.dart';
 import 'package:simple_chat_app/home_screen/const/drawer.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -12,6 +17,12 @@ class HomeScreen extends StatelessWidget {
       child: DefaultTabController(
         length: 3,
         child: Scaffold(
+            floatingActionButton: FloatingActionButton(
+              onPressed: () {
+                Get.to(() => ComposeScreen());
+              },
+              child: const Icon(Icons.add),
+            ),
             backgroundColor: Colors.black,
             key: scaffoldKey,
             drawer: drawer(),
@@ -45,10 +56,12 @@ class HomeScreen extends StatelessWidget {
                           children: [
                             Container(
                               decoration: const BoxDecoration(
-                                  color: Colors.red,
-                                  borderRadius: BorderRadius.only(
-                                    bottomLeft: Radius.circular(16),
-                                  )),
+                                // color: Colors.red,
+                                borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(16),
+                                ),
+                              ),
+                              child: ChatsScreens(),
                             ),
                             Container(
                               decoration: const BoxDecoration(
