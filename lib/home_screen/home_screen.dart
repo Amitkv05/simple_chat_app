@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:simple_chat_app/chat_screen/chats_screens.dart';
+import 'package:simple_chat_app/chat_screen/chats_component.dart';
 import 'package:simple_chat_app/chat_screen/compose_screen.dart';
+import 'package:simple_chat_app/controllers/home_controller.dart';
 import 'package:simple_chat_app/home_screen/const/appbar.dart';
 import 'package:simple_chat_app/home_screen/const/drawer.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -13,6 +14,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var scaffoldKey = GlobalKey<ScaffoldState>();
+    var controller = Get.put(HomeController());
     return SafeArea(
       child: DefaultTabController(
         length: 3,
@@ -61,7 +63,7 @@ class HomeScreen extends StatelessWidget {
                                   bottomLeft: Radius.circular(16),
                                 ),
                               ),
-                              child: ChatsScreens(),
+                              child: ChatsComponent(),
                             ),
                             Container(
                               decoration: const BoxDecoration(
