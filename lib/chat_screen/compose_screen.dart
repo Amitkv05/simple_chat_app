@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:simple_chat_app/Services/store_service.dart';
+import 'package:simple_chat_app/chat_screen/msg_screen.dart';
 import 'package:simple_chat_app/const/colors.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -65,7 +68,7 @@ class ComposeScreen extends StatelessWidget {
                                     // backgroundImage: NetworkImage('${doc['image_url']}'),
                                     // backgroundImage:
                                     //     AssetImage('assets/icons/ic_user.png'),
-                                    child: Image.network(
+                                    child: Image.network(  
                                       doc['userImage'],
                                       height: 150,
                                       width: 150,
@@ -87,17 +90,21 @@ class ComposeScreen extends StatelessWidget {
                               onPressed: () {
                                 // on top of this button we are going to send our user to the chat screen
                                 // but we want to change the name of the user
-                                // Get.to(
-                                //     () => ChatScreen(
-                                //         // user: '${doc['name']}',
-                                //         ),
-                                //     transition: Transition.downToUp,
-                                //     arguments: [
-                                //       // but here in compose chat screen we have implemented everything so lets add
-                                //       // real values
-                                //       doc['name'],
-                                //       doc['id'],
-                                //     ]);
+                                Get.to(
+                                    () => MsgScreen(
+                                          sendername: doc['username'],
+                                          receiverUserEmail: doc['email'],
+                                          receiverUserId: doc['id'],
+                                          receivername: doc['username'],
+                                          receiverImage: doc['userImage'],
+                                        ),
+                                    transition: Transition.downToUp,
+                                    arguments: [
+                                      // but here in compose chat screen we have implemented everything so lets add
+                                      // real values
+                                      doc['username'],
+                                      doc['id'],
+                                    ]);
                               },
                               icon: const Icon(Icons.message),
                               label: const Text('Message'))

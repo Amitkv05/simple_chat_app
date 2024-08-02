@@ -127,6 +127,7 @@ class _MsgScreenState extends State<MsgScreen> {
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   child: TextFormField(
+                                    style: const TextStyle(color: Colors.white),
                                     controller: _messageController,
                                     decoration: const InputDecoration(
                                         prefixIcon: Icon(
@@ -181,18 +182,20 @@ class _MsgScreenState extends State<MsgScreen> {
             }
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
-                child: Text('Loading...'),
+                child: Text('waiting...'),
               );
             }
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: snapshot.data!.docs
-                  .map((document) => MsgBubble(
-                        receivername: receivername,
-                        receiverImage: widget.receiverImage,
-                        document: document,
-                      ))
-                  .toList(),
+            return SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: snapshot.data!.docs
+                    .map((document) => MsgBubble(
+                          receivername: receivername,
+                          receiverImage: widget.receiverImage,
+                          document: document,
+                        ))
+                    .toList(),
+              ),
             );
           }),
     );
